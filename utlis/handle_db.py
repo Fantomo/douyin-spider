@@ -33,13 +33,13 @@ class HandleMongo:
 	"""
 
 	def __init__(self):
-		self.client = pymongo.MongoClient(
+		self.__client = pymongo.MongoClient(
 			host='localhost',
 			port=27017
 		)
 
 	def save(self, db_name, sheet_name, data):
-		db = self.client[db_name]
+		db = self.__client[db_name]
 		sheet = db[sheet_name]
 		sheet.insert(data)
 

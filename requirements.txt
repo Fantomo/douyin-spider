@@ -1,0 +1,5 @@
+Appium-Python-Client==0.41
+pymongo==3.8.0
+redis==3.2.1
+requests==2.21.0
+selenium==3.141.0

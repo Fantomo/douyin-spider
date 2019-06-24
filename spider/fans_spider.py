@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 import json
+import sys
+sys.path.append("../")
 from utlis.handle_db import mongo_cli
 
 

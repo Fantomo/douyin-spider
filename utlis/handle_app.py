@@ -6,7 +6,7 @@ from appium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import *
+from selenium.common.exceptions import TimeoutException
 
 
 class Element:
@@ -21,14 +21,14 @@ class Element:
 
 class HandleApp:
 
-	def __init__(self):
+	def __init__(self, command=None):
 
 		desired_caps = {
 			'platformName': 'Android',
-			# 'platformVersion': '5.1.1',
-			# 'deviceName': '127.0.0.1:62001',
-			'platformVersion': '7.1.1',
-			'deviceName': '3e18d75a',
+			'platformVersion': '5.1.1',
+			'deviceName': '127.0.0.1:62001',
+			# 'platformVersion': '7.1.1',
+			# 'deviceName': '3e18d75a',
 			'appPackage': 'com.ss.android.ugc.aweme',
 			'appActivity': '.splash.SplashActivity',
 			'noReset': True,
@@ -36,9 +36,10 @@ class HandleApp:
 			'resetKeyboard': True
 		}
 		appium_server = "http://localhost:4723/wd/hub"
-		# appium_server = "http://192.168.3.23:4723/wd/hub"
+		# appium_server = "http://192.168.10.99:4723/wd/hub"
 		self.driver = webdriver.Remote(appium_server, desired_caps)
 		self.e = Element()
+		self.command = command
 
 	def get_size(self):
 		"""
@@ -65,7 +66,7 @@ class HandleApp:
 		# 进入用户主页
 		WebDriverWait(self.driver, 10).until(EC.visibility_of_all_elements_located(self.e.USER))[0].click()
 
-		if flag == 'fans':
+		if self.command == 'fans':
 			"""
 			判断用户是否有粉丝
 			:param user: 用户id
@@ -91,8 +92,11 @@ class HandleApp:
 				self.driver.swipe(x, y1, x, y2)
 				sleep(3)
 
+	def __del__(self):
+		self.driver.quit()
+
 
 if __name__ == "__main__":
 	f = HandleApp()
-	f.input_user_id("锅盖wer", 'fans')
+	f.input_user_id("锅盖wer")
 	f.move_page()

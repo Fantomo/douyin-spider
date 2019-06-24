@@ -2,6 +2,8 @@
 
 import json
 import hashlib
+import sys
+sys.path.append("../")
 from base64 import b64encode
 from utlis.handle_db import redis_cli
 
