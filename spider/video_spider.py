@@ -19,6 +19,7 @@ def response(flow):
 				v['video_url'] = video['video']['play_addr']['url_list'][0]
 			except KeyError:
 				v['image_url'] = video['image_infos'][0]['label_large']['url_list'][0]
-			desc = video['desc']
-			v['video_name'] = hashlib.md5(desc.encode('utf8')).hexdigest()
-			redis_cli.save_data('dy', json.dumps(v))
+			finally:
+				desc = video['desc']
+				v['video_name'] = hashlib.md5(desc.encode('utf8')).hexdigest()
+				redis_cli.save_data('dy', json.dumps(v))
